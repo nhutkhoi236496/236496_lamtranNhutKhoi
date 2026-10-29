@@ -99,3 +99,38 @@ Kết quả đã kiểm thử:
 - Không đưa file `.env` vào Docker Image.
 - Không đưa thông tin đăng nhập MongoDB lên GitHub.
 - Sử dụng `--env-file` để truyền biến môi trường khi chạy container.
+## Câu 6: Đóng gói Frontend bằng Docker
+
+### Docker Image
+- Image: `nhutkhoi236496/frontend:1.0`
+- Docker Hub: https://hub.docker.com/r/nhutkhoi236496/frontend
+
+### Build Frontend
+
+```bash
+docker build -t nhutkhoi236496/frontend:1.0 ./frontend
+```
+
+### Chạy Frontend
+
+```bash
+docker run -d \
+  --name frontend-cau6-test \
+  -p 5175:80 \
+  --add-host=host.docker.internal:host-gateway \
+  nhutkhoi236496/frontend:1.0
+```
+
+### Kiểm tra ứng dụng
+
+```bash
+docker ps
+curl -I http://localhost:5175/
+curl -i http://localhost:5175/api/foods
+```
+
+Frontend sử dụng React, Vite và Nginx. Nginx phục vụ giao diện trên cổng 80 và chuyển tiếp yêu cầu API tới Backend.
+
+### Bảo mật
+- Không đưa file `.env` vào Docker Image.
+- Không đưa mật khẩu hoặc thông tin nhạy cảm lên GitHub.
