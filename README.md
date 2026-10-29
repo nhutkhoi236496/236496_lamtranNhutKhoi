@@ -56,3 +56,46 @@ Hướng dẫn cài đặt và chạy frontend, backend sẽ được cập nh�
 ## 7. Bảo mật
 
 Không đưa mật khẩu, access token hoặc chuỗi kết nối MongoDB có thông tin xác thực lên repository công khai. Sử dụng biến môi trường để cấu hình ứng dụng.
+## Câu 5: Đóng gói Backend bằng Docker
+
+### 1. Thông tin Docker Image
+
+- Docker Hub Username: `nhutkhoi236496`
+- Docker Image: `nhutkhoi236496/backend:1.0`
+- Docker Hub URL: https://hub.docker.com/r/nhutkhoi236496/backend
+
+### 2. Build Docker Image
+
+Tại thư mục gốc dự án, chạy:
+
+```bash
+docker build -t nhutkhoi236496/backend:1.0 ./backend
+```
+
+### 3. Chạy Docker Container
+
+Tạo file `backend/.env` với các biến môi trường cần thiết.
+
+```bash
+docker run -d --name backend-cau5-test -p 5001:5000 --env-file ./backend/.env nhutkhoi236496/backend:1.0
+```
+
+### 4. Kiểm tra Backend
+
+```bash
+docker ps
+docker logs backend-cau5-test
+curl -i http://localhost:5001/health
+```
+
+Kết quả đã kiểm thử:
+
+- Backend chạy tại cổng `5000` trong container.
+- MongoDB Atlas kết nối thành công.
+- API `/health` trả về HTTP `200 OK`.
+
+### 5. Bảo mật
+
+- Không đưa file `.env` vào Docker Image.
+- Không đưa thông tin đăng nhập MongoDB lên GitHub.
+- Sử dụng `--env-file` để truyền biến môi trường khi chạy container.
